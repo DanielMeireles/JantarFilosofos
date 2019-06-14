@@ -27,7 +27,7 @@ public class Filosofo extends Thread {
                         // Executa o método que pausa a thread
                         pensando();
                         // Exclusão mútua - Começa a executar
-                        JantarFilosofos.getMutex().acquire();
+                        JantarFilosofos.mutex.acquire();
                         // Altera o status para faminto
                         estado = Estado.FAMINTO; 
                         break;
@@ -35,7 +35,7 @@ public class Filosofo extends Thread {
                         // Executa o método que verifica se os filósofos a direita e esquerda estão comendo
                         teste(this);
                         // Exclusão mútua - Termina a execução
-                        JantarFilosofos.getMutex().release();
+                        JantarFilosofos.mutex.release();
                         // Bloqueia o semáforo
                         semaforo.acquire();
                         // Altera o estado para comendo
@@ -44,7 +44,7 @@ public class Filosofo extends Thread {
                     case COMENDO:
                         comendo();
                         // Exclusão mútua - Começa a executar
-                        JantarFilosofos.getMutex().acquire();
+                        JantarFilosofos.mutex.acquire();
                         // Altera o estado para pensando
                         estado = Estado.PENSANDO;
                         // Executa o método que verifica se os filósofos a direita e esquerda estão comendo
@@ -53,7 +53,7 @@ public class Filosofo extends Thread {
                         teste(esquerda());  
                         teste(direita());
                         // Exclusão mútua - Termina a execução
-                        JantarFilosofos.getMutex().release();
+                        JantarFilosofos.mutex.release();
                         break;          
                 }
             }
@@ -62,12 +62,12 @@ public class Filosofo extends Thread {
     
     // Método que pega o filósofo a esquerda
     public Filosofo esquerda() {
-      return JantarFilosofos.getFilosofos().get(id == 0 ? JantarFilosofos.getQuantidadeFilosofos() - 1 : id - 1);
+      return JantarFilosofos.filosofos.get(id == 0 ? JantarFilosofos.quantidadeFilosofos - 1 : id - 1);
     }
 
     // Método que pega o filósofo a direita
     public Filosofo direita() {
-        return JantarFilosofos.getFilosofos().get((id + 1) % JantarFilosofos.getQuantidadeFilosofos());
+        return JantarFilosofos.filosofos.get((id + 1) % JantarFilosofos.quantidadeFilosofos);
     }
 
     // Método que verifica se o filósofo da esquerda ou direita está comendo, caso esteja libera o semáforo
@@ -99,19 +99,6 @@ public class Filosofo extends Thread {
     // Método que faz a impressão
     private void imprime() {
         System.out.println("(" + (id + 1) + ") " + nome + " está " + estado.getDescricao());
-    }
-    
-    // Getters e Setters das variáveis e objetos
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public Semaphore getSemaforo() {
-        return semaforo;
     }
     
 }

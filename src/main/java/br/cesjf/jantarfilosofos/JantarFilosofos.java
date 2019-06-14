@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-public class JantarFilosofos {
+public class JantarFilosofos  extends Thread {
 
     // Declaração das variáveis, listas e objetos
-    private static final int quantidadeFilosofos = 5;
-    private static final Semaphore mutex = new Semaphore(1);
-    private static final List<String> nomes = new ArrayList<String>();
-    private static final List<Filosofo> filosofos = new ArrayList<Filosofo>();
+    public static final int quantidadeFilosofos = 5;
+    public static final Semaphore mutex = new Semaphore(1);
+    public static final List<String> nomes = new ArrayList<String>();
+    public static final List<Filosofo> filosofos = new ArrayList<Filosofo>();
     
     public static void main(String[] args) {
         
@@ -31,19 +31,6 @@ public class JantarFilosofos {
             t.start();
         }
         
-    }
-    
-    // Getters das variáveis, listas e objetos
-    public static int getQuantidadeFilosofos() {
-        return quantidadeFilosofos;
-    }
-    
-    public static List<Filosofo> getFilosofos() {
-        return filosofos;
-    }
-    
-    public static Semaphore getMutex() {
-        return mutex;
     }
     
 }
