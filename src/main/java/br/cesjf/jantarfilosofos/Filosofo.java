@@ -8,13 +8,12 @@ public class Filosofo extends Thread {
     private final int id;
     private final String nome;
     private Estado estado;
-    private final Semaphore semaforo;
+    private final Semaphore semaforo = new Semaphore(0);
 
     // Construtor
     Filosofo(int id, String nome) {
         this.id = id;
         this.nome = nome;
-        semaforo = new Semaphore(0);
         estado = Estado.PENSANDO;
     }
     
@@ -50,7 +49,7 @@ public class Filosofo extends Thread {
                         // Executa o método que verifica se os filósofos a direita e esquerda estão comendo
                         // Como são passados os vizinhos como parâmetro serve como uma cutucada para que os vizinhos comam
                         // Caso estejam famintos e seus vizinhos não estejam comendo
-                        teste(esquerda());  
+                        teste(esquerda());
                         teste(direita());
                         // Exclusão mútua - Termina a execução
                         JantarFilosofos.mutex.release();

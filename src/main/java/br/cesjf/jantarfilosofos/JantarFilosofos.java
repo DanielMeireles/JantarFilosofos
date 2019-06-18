@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-public class JantarFilosofos  extends Thread {
+public class JantarFilosofos  {
 
     // Declaração das variáveis, listas e objetos
     public static final int quantidadeFilosofos = 5;
